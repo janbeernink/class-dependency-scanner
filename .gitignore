@@ -1,6 +1,17 @@
-*.class
+.gradle/
+bin/
+build/
+buildSrc/.gradle/
+buildSrc/build/
+libs/
+*.log
 
-# Package Files #
-*.jar
-*.war
-*.ear
+# IDE files
+*.iml
+.idea/
+.project
+.classpath
+.settings/
+
+#OS files
+.DS_Store
