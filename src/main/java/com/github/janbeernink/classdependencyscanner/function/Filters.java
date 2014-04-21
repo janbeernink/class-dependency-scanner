@@ -44,4 +44,22 @@ public final class Filters {
 
 		};
 	}
+
+	public static Filter or(final Filter firstFilter, final Filter secondFilter) {
+		return new Filter() {
+			@Override
+			public boolean includeClassInResults(Class<?> clazz) {
+				return firstFilter.includeClassInResults(clazz) || secondFilter.includeClassInResults(clazz);
+			}
+		};
+	}
+
+	public static Filter not(final Filter filter) {
+		return new Filter() {
+			@Override
+			public boolean includeClassInResults(Class<?> clazz) {
+				return !filter.includeClassInResults(clazz);
+			}
+		};
+	}
 }
