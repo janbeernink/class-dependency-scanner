@@ -1,18 +1,20 @@
 package com.github.janbeernink.classdependencyscanner;
 
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.core.IsCollectionContaining.hasItem;
+import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import java.util.Set;
-
-import org.junit.Test;
 
 import com.github.janbeernink.classdependencyscanner.annotationdependency.AnnotatedClass;
 import com.github.janbeernink.classdependencyscanner.annotationdependency.MyAnnotation;
 import com.github.janbeernink.classdependencyscanner.fielddependency.A;
 import com.github.janbeernink.classdependencyscanner.fielddependency.B;
 import com.github.janbeernink.classdependencyscanner.fielddependency.C;
+import com.github.janbeernink.classdependencyscanner.fielddependency.D;
+import com.github.janbeernink.classdependencyscanner.function.Filters;
 import com.github.janbeernink.classdependencyscanner.methoddependency.ClassWithMethod;
 import com.github.janbeernink.classdependencyscanner.methoddependency.FirstParameterType;
 import com.github.janbeernink.classdependencyscanner.methoddependency.ReturnType;
@@ -25,6 +27,7 @@ import com.github.janbeernink.classdependencyscanner.supertypedependency.SecondI
 import com.github.janbeernink.classdependencyscanner.supertypedependency.SuperClass;
 import com.github.janbeernink.classdependencyscanner.throwsdependency.ClassWithThrowsMethod;
 import com.github.janbeernink.classdependencyscanner.throwsdependency.TestException;
+import org.junit.Test;
 
 public class ClassDependencyScannerTest {
 
@@ -36,16 +39,23 @@ public class ClassDependencyScannerTest {
 
 		Set<DependencyGraphNode> dependencies = dependencyGraph.getDependencies();
 
-		assertThat(dependencies, hasItem(new DependencyGraphNode(B.class)));
-		assertThat(dependencies, hasItem(new DependencyGraphNode(C.class)));
+		assertThat(dependencies, hasItems(new DependencyGraphNode(B.class), new DependencyGraphNode(C.class), new DependencyGraphNode(Object.class)));
+
+		dependencyGraph = new ClassDependencyScanner().setFilter(Filters.excludeJDKClasses()).buildDependencyGraph(D.class);
+
+		assertEquals(D.class, dependencyGraph.getDependencyClass());
+
+		assertThat(dependencyGraph.getDependencies(), hasItem(new DependencyGraphNode(A.class)));
+		assertThat(dependencyGraph.getDependencies(), hasSize(1));
+
+		assertThat(dependencyGraph.getDependencies().iterator().next().getDependencies(), hasItems(new DependencyGraphNode(B.class), new DependencyGraphNode(C.class)));
 	}
 
 	@Test
 	public void testInterfaceSuperTypes() {
 		DependencyGraphNode dependencyGraphNode = new ClassDependencyScanner().buildDependencyGraph(InterfaceImplementerType.class);
 
-		assertThat(dependencyGraphNode.getDependencies(), hasItem(new DependencyGraphNode(FirstInterfaceType.class)));
-		assertThat(dependencyGraphNode.getDependencies(), hasItem(new DependencyGraphNode(SecondInterfaceType.class)));
+		assertThat(dependencyGraphNode.getDependencies(), hasItems(new DependencyGraphNode(FirstInterfaceType.class), new DependencyGraphNode(SecondInterfaceType.class)));
 	}
 
 	@Test
@@ -59,10 +69,7 @@ public class ClassDependencyScannerTest {
 	public void testMethodDependencies() {
 		DependencyGraphNode dependencyGraphNode = new ClassDependencyScanner().buildDependencyGraph(ClassWithMethod.class);
 
-		assertThat(dependencyGraphNode.getDependencies(), hasItem(new DependencyGraphNode(VariableType.class)));
-		assertThat(dependencyGraphNode.getDependencies(), hasItem(new DependencyGraphNode(FirstParameterType.class)));
-		assertThat(dependencyGraphNode.getDependencies(), hasItem(new DependencyGraphNode(SecondParameterType.class)));
-		assertThat(dependencyGraphNode.getDependencies(), hasItem(new DependencyGraphNode(ReturnType.class)));
+		assertThat(dependencyGraphNode.getDependencies(), hasItems(new DependencyGraphNode(VariableType.class), new DependencyGraphNode(FirstParameterType.class), new DependencyGraphNode(SecondParameterType.class), new DependencyGraphNode(ReturnType.class)));
 	}
 
 	@Test

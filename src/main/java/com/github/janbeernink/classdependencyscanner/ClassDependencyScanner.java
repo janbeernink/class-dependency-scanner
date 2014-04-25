@@ -31,7 +31,7 @@ public class ClassDependencyScanner {
 
 		DependencyGraphNode dependencyGraphNode = new DependencyGraphNode(startingPoint);
 
-		processClass(dependencyGraphNode.getDependencyClass(), new ClassDependencyVisitor(dependencyGraphNode, new HashMap<Class<?>, DependencyGraphNode>(), filter));
+		processClass(dependencyGraphNode.getDependencyClass(), new DependencyClassVisitor(dependencyGraphNode, new HashMap<Class<?>, DependencyGraphNode>(), filter));
 
 		return dependencyGraphNode;
 	}

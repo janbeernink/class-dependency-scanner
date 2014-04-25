@@ -122,7 +122,7 @@ public class Util {
 		return Collections.emptySet();
 	}
 
-	static void processClass(Class<?> clazz, ClassDependencyVisitor classVisitor) {
+	static void processClass(Class<?> clazz, DependencyClassVisitor classVisitor) {
 		try (InputStream in = getInputStreamForClass(clazz)) {
 			ClassReader classReader = new ClassReader(in);
 
@@ -143,7 +143,7 @@ public class Util {
 				currentNode.getDependencies().add(nextNode);
 				visitedClasses.put(clazz, nextNode);
 
-				processClass(clazz, new ClassDependencyVisitor(nextNode, visitedClasses, filter));
+				processClass(clazz, new DependencyClassVisitor(nextNode, visitedClasses, filter));
 			}
 		}
 	}

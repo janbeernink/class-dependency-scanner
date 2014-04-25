@@ -15,7 +15,7 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
 import com.github.janbeernink.classdependencyscanner.function.Filter;
-final class ClassDependencyVisitor extends ClassVisitor {
+final class DependencyClassVisitor extends ClassVisitor {
 
 	static final int API_VERSION = Opcodes.ASM5;
 
@@ -23,7 +23,7 @@ final class ClassDependencyVisitor extends ClassVisitor {
 	private Map<Class<?>, DependencyGraphNode> visitedClasses;
 	private Filter filter;
 
-	ClassDependencyVisitor(DependencyGraphNode dependencyGraphNode, Map<Class<?>, DependencyGraphNode> visitedClasses, Filter filter) {
+	DependencyClassVisitor(DependencyGraphNode dependencyGraphNode, Map<Class<?>, DependencyGraphNode> visitedClasses, Filter filter) {
 		super(API_VERSION);
 
 		this.currentNode = dependencyGraphNode;

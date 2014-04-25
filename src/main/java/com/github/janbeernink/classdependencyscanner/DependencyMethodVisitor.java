@@ -14,7 +14,7 @@ final class DependencyMethodVisitor extends MethodVisitor {
 	private Filter filter;
 
 	DependencyMethodVisitor(DependencyGraphNode currentNode, Map<Class<?>, DependencyGraphNode> visitedClasses, Filter filter) {
-		super(ClassDependencyVisitor.API_VERSION);
+		super(DependencyClassVisitor.API_VERSION);
 
 		this.currentNode = currentNode;
 		this.visitedClasses = visitedClasses;
