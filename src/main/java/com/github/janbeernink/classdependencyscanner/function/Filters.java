@@ -19,21 +19,56 @@ public final class Filters {
 	private Filters() {
 	}
 
+	/**
+	 * Returns a filter that excludes classes from the standard JDK libraries from the dependeny graph
+	 *
+	 * @return a filter that excludes classes from the standard JDK libraries
+	 */
 	public static Filter excludeJDKClasses() {
 		return EXCLUDE_JDK_CLASSES_FILTER;
 	}
 
+	/**
+	 * Returns a filter that only includes classes in a given package or any subpackages of this package.
+	 *
+	 * @param packageName
+	 *            the name of the package
+	 * @return a filter that only includes classes from a certain package
+	 */
 	public static Filter limitToPackage(final String packageName) {
+		return limitToPackage(packageName, true);
+	}
+
+	/**
+	 * Returns a filter that only includes classes in a given package and optionally all sub-packages of this package
+	 *
+	 * @param packageName
+	 *            the name of the package
+	 * @param includeSubPackages
+	 *            boolean to indicate if sub-packages should be included or not
+	 * @return a filter that only includes classes in a certain package
+	 */
+	public static Filter limitToPackage(final String packageName, final boolean includeSubPackages) {
 		return new Filter() {
 
 			@Override
 			public boolean include(Class<?> clazz) {
-				return clazz.getPackage().getName().equals(packageName) || clazz.getPackage().getName().startsWith(packageName + ".");
+				return clazz.getPackage().getName().equals(packageName)
+				        || (includeSubPackages && clazz.getPackage().getName().startsWith(packageName + "."));
 			}
 
 		};
 	}
 
+	/**
+	 * Returns a composed filter that performs a short-circuiting logical AND of two filters.
+	 *
+	 * @param firstFilter
+	 *            the first filter
+	 * @param secondFilter
+	 *            the second filter
+	 * @return the composed filter
+	 */
 	public static Filter and(final Filter firstFilter, final Filter secondFilter) {
 		return new Filter() {
 
@@ -45,6 +80,15 @@ public final class Filters {
 		};
 	}
 
+	/**
+	 * Returns a composed filter that performs a short-circuiting logical OR of two filters.
+	 *
+	 * @param firstFilter
+	 *            the first filter
+	 * @param secondFilter
+	 *            the second filter
+	 * @return the composed filter
+	 */
 	public static Filter or(final Filter firstFilter, final Filter secondFilter) {
 		return new Filter() {
 			@Override
@@ -54,6 +98,13 @@ public final class Filters {
 		};
 	}
 
+	/**
+	 * Returns a filter that negates the result of the input filter
+	 *
+	 * @param filter
+	 *            the filter that should be negated
+	 * @return the negated filter
+	 */
 	public static Filter not(final Filter filter) {
 		return new Filter() {
 			@Override

@@ -22,7 +22,7 @@ import com.github.janbeernink.classdependencyscanner.function.Filter;
 public class Util {
 
 	private static final Pattern METHOD_DESCRIPTOR_PATTERN = Pattern
-			.compile("\\((?<parameterTypes>\\[*(?:Z|C|B|S|I|F|J|D|L.*;))*\\)\\[*(?<returnType>Z|C|B|S|I|F|J|D|V|L.*;)");
+	        .compile("\\((?<parameterTypes>\\[*(?:Z|C|B|S|I|F|J|D|L.*;))*\\)\\[*(?<returnType>Z|C|B|S|I|F|J|D|V|L.*;)");
 
 	private Util() {
 	}
@@ -148,6 +148,13 @@ public class Util {
 		}
 	}
 
+	/**
+	 * Get the class path entry for a given {@link Class}.
+	 *
+	 * @param clazz
+	 *            the class to get the class path entry for
+	 * @return the class path entry
+	 */
 	public static ClassPathEntry getClassPathEntryByClass(Class<?> clazz) {
 		URL resource = Util.class.getResource(getClassFileName(clazz));
 
