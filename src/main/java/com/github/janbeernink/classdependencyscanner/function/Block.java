@@ -4,6 +4,6 @@ import com.github.janbeernink.classdependencyscanner.DependencyGraphNode;
 
 public interface Block {
 
-	void process(DependencyGraphNode dependencyGraphNode);
+	void accept(DependencyGraphNode dependencyGraphNode);
 
 }

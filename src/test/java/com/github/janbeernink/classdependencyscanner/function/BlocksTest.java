@@ -16,9 +16,9 @@ public class BlocksTest {
 	public void testAddClassesToCollection() {
 		List<Object> objects = new ArrayList<>();
 
-		Block block = Blocks.addClassToCollection(objects);
+		Block block = Blocks.addClassTo(objects);
 
-		block.process(new DependencyGraphNode(BlocksTest.class));
+		block.accept(new DependencyGraphNode(BlocksTest.class));
 
 		assertThat(objects, IsCollectionContaining.hasItem(BlocksTest.class));
 	}

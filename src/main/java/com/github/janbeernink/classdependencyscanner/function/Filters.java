@@ -9,7 +9,7 @@ public final class Filters {
 		private ClassPathEntry classPathEntry = Util.getClassPathEntryByClass(Object.class);
 
 		@Override
-		public boolean includeClassInResults(Class<?> clazz) {
+		public boolean include(Class<?> clazz) {
 
 			// This will probably break once the module system is introduced
 			return !classPathEntry.equals(Util.getClassPathEntryByClass(clazz));
@@ -27,7 +27,7 @@ public final class Filters {
 		return new Filter() {
 
 			@Override
-			public boolean includeClassInResults(Class<?> clazz) {
+			public boolean include(Class<?> clazz) {
 				return clazz.getPackage().getName().equals(packageName) || clazz.getPackage().getName().startsWith(packageName + ".");
 			}
 
@@ -38,8 +38,8 @@ public final class Filters {
 		return new Filter() {
 
 			@Override
-			public boolean includeClassInResults(Class<?> clazz) {
-				return firstFilter.includeClassInResults(clazz) && secondFilter.includeClassInResults(clazz);
+			public boolean include(Class<?> clazz) {
+				return firstFilter.include(clazz) && secondFilter.include(clazz);
 			}
 
 		};
@@ -48,8 +48,8 @@ public final class Filters {
 	public static Filter or(final Filter firstFilter, final Filter secondFilter) {
 		return new Filter() {
 			@Override
-			public boolean includeClassInResults(Class<?> clazz) {
-				return firstFilter.includeClassInResults(clazz) || secondFilter.includeClassInResults(clazz);
+			public boolean include(Class<?> clazz) {
+				return firstFilter.include(clazz) || secondFilter.include(clazz);
 			}
 		};
 	}
@@ -57,8 +57,8 @@ public final class Filters {
 	public static Filter not(final Filter filter) {
 		return new Filter() {
 			@Override
-			public boolean includeClassInResults(Class<?> clazz) {
-				return !filter.includeClassInResults(clazz);
+			public boolean include(Class<?> clazz) {
+				return !filter.include(clazz);
 			}
 		};
 	}

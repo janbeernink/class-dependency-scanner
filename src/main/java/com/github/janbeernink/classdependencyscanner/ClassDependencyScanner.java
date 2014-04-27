@@ -24,7 +24,7 @@ public class ClassDependencyScanner {
 	}
 
 	public DependencyGraphNode buildDependencyGraph(Class<?> startingPoint) {
-		if (filter != null && !filter.includeClassInResults(startingPoint)) {
+		if (filter != null && !filter.include(startingPoint)) {
 			// TODO throw exception
 			return null;
 		}

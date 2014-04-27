@@ -39,9 +39,9 @@ public class DependencyGraphNode implements Iterable<DependencyGraphNode> {
 		return new DependencyGraphNodeIterator(this);
 	}
 
-	public void forEachDependency(Block block) {
+	public void forEachNode(Block block) {
 		for (DependencyGraphNode dependencyGraphNode : this) {
-			block.process(dependencyGraphNode);
+			block.accept(dependencyGraphNode);
 		}
 	}
 

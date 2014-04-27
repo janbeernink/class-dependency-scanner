@@ -1,7 +1,7 @@
 package com.github.janbeernink.classdependencyscanner;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static com.github.janbeernink.classdependencyscanner.function.Blocks.addClassToCollection;
+import static com.github.janbeernink.classdependencyscanner.function.Blocks.addClassTo;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,7 +29,7 @@ public class ClassDependencyScannerApp {
 						}
 					});
 
-					classDependencyScanner.buildDependencyGraph(clazz).forEachDependency(addClassToCollection(sortedClasses));
+					classDependencyScanner.buildDependencyGraph(clazz).forEachNode(addClassTo(sortedClasses));
 
 					System.out.println("The class \"" + className + "\" has the following dependencies:");
 					System.out.println();

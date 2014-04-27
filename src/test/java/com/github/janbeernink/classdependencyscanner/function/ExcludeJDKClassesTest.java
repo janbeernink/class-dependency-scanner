@@ -9,11 +9,11 @@ public class ExcludeJDKClassesTest {
 
 	@Test
 	public void testJDKClass() {
-		assertFalse(Filters.excludeJDKClasses().includeClassInResults(String.class));
+		assertFalse(Filters.excludeJDKClasses().include(String.class));
 	}
 
 	@Test
 	public void testNonJDKClass() {
-		assertTrue(Filters.excludeJDKClasses().includeClassInResults(ExcludeJDKClassesTest.class));
+		assertTrue(Filters.excludeJDKClasses().include(ExcludeJDKClassesTest.class));
 	}
 }

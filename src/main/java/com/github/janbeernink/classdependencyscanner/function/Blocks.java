@@ -9,11 +9,11 @@ public class Blocks {
 	private Blocks() {
 	}
 
-	public static Block addClassToCollection(final Collection<? super Class<?>> collection) {
+	public static Block addClassTo(final Collection<? super Class<?>> collection) {
 		return new Block() {
 
 			@Override
-			public void process(DependencyGraphNode dependencyGraphNode) {
+			public void accept(DependencyGraphNode dependencyGraphNode) {
 				collection.add(dependencyGraphNode.getDependencyClass());
 			}
 		};
