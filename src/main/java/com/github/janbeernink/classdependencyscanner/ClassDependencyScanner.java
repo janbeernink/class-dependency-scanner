@@ -3,15 +3,10 @@ package com.github.janbeernink.classdependencyscanner;
 import static com.github.janbeernink.classdependencyscanner.Util.processClass;
 
 import java.util.HashMap;
-import java.util.logging.Logger;
-import java.util.regex.Pattern;
 
 import com.github.janbeernink.classdependencyscanner.function.Filter;
 
 public class ClassDependencyScanner {
-	static final Logger logger = Logger.getLogger(ClassDependencyScanner.class.getName());
-
-	static final Pattern SIGNATURE_PATTERN = Pattern.compile("\\[?L(?<class>[^<;]+)(?:<.*>)?;");
 
 	private Filter filter;
 
@@ -42,7 +37,7 @@ public class ClassDependencyScanner {
 
 		DependencyGraphNode dependencyGraphNode = new DependencyGraphNode(startingPoint);
 
-		processClass(dependencyGraphNode.getDependencyClass(), new DependencyClassVisitor(dependencyGraphNode,
+		processClass(dependencyGraphNode.getNodeClass(), new DependencyClassVisitor(dependencyGraphNode,
 		        new HashMap<Class<?>, DependencyGraphNode>(), filter));
 
 		return dependencyGraphNode;

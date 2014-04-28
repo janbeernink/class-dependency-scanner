@@ -8,22 +8,22 @@ import com.github.janbeernink.classdependencyscanner.function.Block;
 
 public class DependencyGraphNode implements Iterable<DependencyGraphNode> {
 
-	private Class<?> dependencyClass;
+	private Class<?> nodeClass;
 
 	private ClassPathEntry classPathEntry;
 	private Set<DependencyGraphNode> dependencies = new HashSet<>();
 
-	public DependencyGraphNode(Class<?> dependencyClass) {
-		this(dependencyClass, Util.getClassPathEntryByClass(dependencyClass));
+	public DependencyGraphNode(Class<?> nodeClass) {
+		this(nodeClass, Util.getClassPathEntryByClass(nodeClass));
 	}
 
-	public DependencyGraphNode(Class<?> dependencyClass, ClassPathEntry classPathEntry) {
-		this.dependencyClass = dependencyClass;
+	public DependencyGraphNode(Class<?> nodeClass, ClassPathEntry classPathEntry) {
+		this.nodeClass = nodeClass;
 		this.classPathEntry = classPathEntry;
 	}
 
-	public Class<?> getDependencyClass() {
-		return dependencyClass;
+	public Class<?> getNodeClass() {
+		return nodeClass;
 	}
 
 	public ClassPathEntry getClassPathEntry() {
@@ -47,7 +47,7 @@ public class DependencyGraphNode implements Iterable<DependencyGraphNode> {
 
 	@Override
 	public int hashCode() {
-		return dependencyClass.hashCode();
+		return nodeClass.hashCode();
 	}
 
 	@Override
@@ -58,11 +58,11 @@ public class DependencyGraphNode implements Iterable<DependencyGraphNode> {
 
 		DependencyGraphNode other = (DependencyGraphNode) obj;
 
-		return getDependencyClass().equals(other.getDependencyClass()) && getClassPathEntry().equals(other.getClassPathEntry());
+		return getNodeClass().equals(other.getNodeClass()) && getClassPathEntry().equals(other.getClassPathEntry());
 	}
 
 	@Override
 	public String toString() {
-		return "DependencyGraphNode [dependencyClass=" + dependencyClass + ", classPathEntry=" + classPathEntry + "]";
+		return "DependencyGraphNode [nodeClass=" + nodeClass + ", classPathEntry=" + classPathEntry + "]";
 	}
 }

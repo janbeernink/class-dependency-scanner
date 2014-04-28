@@ -5,15 +5,15 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-public class ExcludeJDKClassesTest {
+public class IsNotPartOfJDKTest {
 
 	@Test
 	public void testJDKClass() {
-		assertFalse(Filters.excludeJDKClasses().include(String.class));
+		assertFalse(Filters.isNotPartOfJDK().include(String.class));
 	}
 
 	@Test
 	public void testNonJDKClass() {
-		assertTrue(Filters.excludeJDKClasses().include(ExcludeJDKClassesTest.class));
+		assertTrue(Filters.isNotPartOfJDK().include(IsNotPartOfJDKTest.class));
 	}
 }

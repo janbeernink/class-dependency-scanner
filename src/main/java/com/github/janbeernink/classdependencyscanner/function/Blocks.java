@@ -21,7 +21,7 @@ public class Blocks {
 
 			@Override
 			public void accept(DependencyGraphNode dependencyGraphNode) {
-				collection.add(dependencyGraphNode.getDependencyClass());
+				collection.add(dependencyGraphNode.getNodeClass());
 			}
 		};
 

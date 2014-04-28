@@ -35,15 +35,15 @@ public class ClassDependencyScannerTest {
 	public void testDependency() {
 		DependencyGraphNode dependencyGraph = new ClassDependencyScanner().buildDependencyGraph(A.class);
 
-		assertEquals(A.class, dependencyGraph.getDependencyClass());
+		assertEquals(A.class, dependencyGraph.getNodeClass());
 
 		Set<DependencyGraphNode> dependencies = dependencyGraph.getDependencies();
 
 		assertThat(dependencies, hasItems(new DependencyGraphNode(B.class), new DependencyGraphNode(C.class), new DependencyGraphNode(Object.class)));
 
-		dependencyGraph = new ClassDependencyScanner().setFilter(Filters.excludeJDKClasses()).buildDependencyGraph(D.class);
+		dependencyGraph = new ClassDependencyScanner().setFilter(Filters.isNotPartOfJDK()).buildDependencyGraph(D.class);
 
-		assertEquals(D.class, dependencyGraph.getDependencyClass());
+		assertEquals(D.class, dependencyGraph.getNodeClass());
 
 		assertThat(dependencyGraph.getDependencies(), hasItem(new DependencyGraphNode(A.class)));
 		assertThat(dependencyGraph.getDependencies(), hasSize(1));

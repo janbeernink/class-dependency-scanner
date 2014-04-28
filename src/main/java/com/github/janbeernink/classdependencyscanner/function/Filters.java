@@ -24,7 +24,7 @@ public final class Filters {
 	 *
 	 * @return a filter that excludes classes from the standard JDK libraries
 	 */
-	public static Filter excludeJDKClasses() {
+	public static Filter isNotPartOfJDK() {
 		return EXCLUDE_JDK_CLASSES_FILTER;
 	}
 
@@ -35,8 +35,8 @@ public final class Filters {
 	 *            the name of the package
 	 * @return a filter that only includes classes from a certain package
 	 */
-	public static Filter limitToPackage(final String packageName) {
-		return limitToPackage(packageName, true);
+	public static Filter isInPackage(final String packageName) {
+		return isInPackage(packageName, true);
 	}
 
 	/**
@@ -48,7 +48,7 @@ public final class Filters {
 	 *            boolean to indicate if sub-packages should be included or not
 	 * @return a filter that only includes classes in a certain package
 	 */
-	public static Filter limitToPackage(final String packageName, final boolean includeSubPackages) {
+	public static Filter isInPackage(final String packageName, final boolean includeSubPackages) {
 		return new Filter() {
 
 			@Override

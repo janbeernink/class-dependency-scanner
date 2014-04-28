@@ -28,7 +28,7 @@ public class FiltersTest {
 
 	@Test
 	public void testLimitToPackage() {
-		Filter filter = Filters.limitToPackage("java.util");
+		Filter filter = Filters.isInPackage("java.util");
 
 		assertTrue(filter.include(List.class));
 		assertFalse(filter.include(java.awt.List.class));
