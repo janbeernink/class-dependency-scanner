@@ -47,7 +47,7 @@ jacoco {
 }
 
 wrapper {
-	gradleVersion = '1.11'
+	gradleVersion = '1.12'
 }
 
 task sourcesJar(type: Jar) {
