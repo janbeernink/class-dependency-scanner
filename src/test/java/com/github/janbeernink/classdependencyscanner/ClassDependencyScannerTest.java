@@ -25,8 +25,10 @@ import com.github.janbeernink.classdependencyscanner.supertypedependency.FirstIn
 import com.github.janbeernink.classdependencyscanner.supertypedependency.InterfaceImplementerType;
 import com.github.janbeernink.classdependencyscanner.supertypedependency.SecondInterfaceType;
 import com.github.janbeernink.classdependencyscanner.supertypedependency.SuperClass;
+import com.github.janbeernink.classdependencyscanner.test.DependsOnSelf;
 import com.github.janbeernink.classdependencyscanner.throwsdependency.ClassWithThrowsMethod;
 import com.github.janbeernink.classdependencyscanner.throwsdependency.TestException;
+import org.hamcrest.core.IsNot;
 import org.junit.Test;
 
 public class ClassDependencyScannerTest {
@@ -84,5 +86,12 @@ public class ClassDependencyScannerTest {
 		DependencyGraphNode dependencyGraphNode = new ClassDependencyScanner().buildDependencyGraph(AnnotatedClass.class);
 
 		assertThat(dependencyGraphNode.getDependencies(), hasItem(new DependencyGraphNode(MyAnnotation.class)));
+	}
+
+	@Test
+	public void testDependsOnSelf() {
+		DependencyGraphNode dependencyGraphNode = new ClassDependencyScanner().setFilter(Filters.isNotPartOfJDK()).buildDependencyGraph(DependsOnSelf.class);
+
+		assertThat(dependencyGraphNode.getDependencies(), IsNot.not(hasItems(new DependencyGraphNode(DependsOnSelf.class))));
 	}
 }

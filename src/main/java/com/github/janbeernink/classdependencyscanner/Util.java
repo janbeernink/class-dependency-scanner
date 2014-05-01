@@ -134,7 +134,7 @@ public class Util {
 	}
 
 	static void visitClass(Class<?> clazz, DependencyGraphNode currentNode, Map<Class<?>, DependencyGraphNode> visitedClasses, Filter filter) {
-		if (!clazz.isPrimitive() && (filter == null || filter.include(clazz))) {
+		if (!clazz.isPrimitive() && (filter == null || filter.include(clazz)) && !clazz.equals(currentNode.getNodeClass())) {
 			if (visitedClasses.containsKey(clazz)) {
 				currentNode.getDependencies().add(visitedClasses.get(clazz));
 			} else {
