@@ -1,7 +1,6 @@
 package com.github.janbeernink.classdependencyscanner;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.hamcrest.BaseMatcher;
@@ -31,9 +30,9 @@ public final class Matchers {
 
 			@Override
 			public void describeMismatch(Object item, Description description) {
-				List<Class<?>> dependencies = new ArrayList<>();
+				List<String> dependencies = new ArrayList<>();
 				for (DependencyGraphNode node: ((DependencyGraphNode)item).getDependencies()) {
-					dependencies.add(node.getNodeClass());
+					dependencies.add(node.getNodeClass().getName());
 				}
 
 				description.appendValueList("depends on: ", ", ", ".", dependencies);
@@ -41,7 +40,12 @@ public final class Matchers {
 
 			@Override
 			public void describeTo(Description description) {
-				description.appendValueList("depends on: ", ", ", ".", Arrays.asList(classes));
+				List<String> classNames = new ArrayList<>();
+				for (Class<?> clazz : classes) {
+					classNames.add(clazz.getName());
+				}
+
+				description.appendValueList("depends on: ", ", ", ".", classNames);
 			}
 		};
 	}

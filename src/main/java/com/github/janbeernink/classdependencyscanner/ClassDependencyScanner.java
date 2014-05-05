@@ -1,12 +1,17 @@
 package com.github.janbeernink.classdependencyscanner;
 
-import static com.github.janbeernink.classdependencyscanner.Util.processClass;
-
-import java.util.HashMap;
-
 import com.github.janbeernink.classdependencyscanner.function.Filter;
 
 public class ClassDependencyScanner {
+
+	private static final Filter INCLUDE_ALL_CLASSES = new Filter() {
+
+		@Override
+		public boolean include(Class<?> clazz) {
+			return true;
+		}
+
+	};
 
 	private Filter filter;
 
@@ -30,17 +35,7 @@ public class ClassDependencyScanner {
 	 * @return a {@link DependencyGraphNode} representing the class that has been used as the starting point
 	 */
 	public DependencyGraphNode buildDependencyGraph(Class<?> startingPoint) {
-		if (filter != null && !filter.include(startingPoint)) {
-			// TODO throw exception
-			return null;
-		}
-
-		DependencyGraphNode dependencyGraphNode = new DependencyGraphNode(startingPoint);
-
-		processClass(dependencyGraphNode.getNodeClass(), new DependencyClassVisitor(dependencyGraphNode,
-		        new HashMap<Class<?>, DependencyGraphNode>(), filter));
-
-		return dependencyGraphNode;
+		return new DependencyGraphBuilder(filter == null ? INCLUDE_ALL_CLASSES : filter).buildDependencyGraph(startingPoint);
 	}
 
 }

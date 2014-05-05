@@ -7,8 +7,6 @@ import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
-import java.util.Set;
-
 import org.hamcrest.core.IsNot;
 import org.junit.Test;
 
@@ -43,9 +41,7 @@ public class ClassDependencyScannerTest {
 
 		assertEquals(A.class, dependencyGraph.getNodeClass());
 
-		Set<DependencyGraphNode> dependencies = dependencyGraph.getDependencies();
-
-		assertThat(dependencies, hasItems(new DependencyGraphNode(B.class), new DependencyGraphNode(C.class), new DependencyGraphNode(Object.class)));
+		assertThat(dependencyGraph, hasDependencies(B.class, C.class, Object.class));
 
 		dependencyGraph = new ClassDependencyScanner().setFilter(Filters.isNotPartOfJDK()).buildDependencyGraph(D.class);
 
@@ -54,7 +50,7 @@ public class ClassDependencyScannerTest {
 		assertThat(dependencyGraph.getDependencies(), hasItem(new DependencyGraphNode(A.class)));
 		assertThat(dependencyGraph.getDependencies(), hasSize(1));
 
-		assertThat(dependencyGraph.getDependencies().iterator().next().getDependencies(), hasItems(new DependencyGraphNode(B.class), new DependencyGraphNode(C.class)));
+		assertThat(dependencyGraph.getDependencies().iterator().next(), hasDependencies(B.class, C.class));
 	}
 
 	@Test
@@ -82,7 +78,7 @@ public class ClassDependencyScannerTest {
 	public void testThrowsClause() {
 		DependencyGraphNode dependencyGraphNode = new ClassDependencyScanner().buildDependencyGraph(ClassWithThrowsMethod.class);
 
-		assertThat(dependencyGraphNode.getDependencies(), hasItem(new DependencyGraphNode(TestException.class)));
+		assertThat(dependencyGraphNode, hasDependencies(TestException.class));
 	}
 
 	@Test
