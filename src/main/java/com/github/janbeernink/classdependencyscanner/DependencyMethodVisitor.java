@@ -1,9 +1,13 @@
 package com.github.janbeernink.classdependencyscanner;
 
+import static com.github.janbeernink.classdependencyscanner.Util.parseTypeDescriptor;
+import static com.github.janbeernink.classdependencyscanner.Util.visitClass;
+
 import java.util.Map;
 
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.signature.SignatureReader;
 
 import com.github.janbeernink.classdependencyscanner.function.Filter;
 
@@ -24,7 +28,11 @@ final class DependencyMethodVisitor extends MethodVisitor {
 	@Override
 	public void visitLocalVariable(String name, String desc, String signature, Label start, Label end, int index) {
 		if (!"this".equals(name)) {
-			Util.visitClass(Util.parseTypeDescriptor(desc), currentNode, visitedClasses, filter);
+			if (signature != null) {
+				new SignatureReader(signature).acceptType(new DependencySignatureVisitor(currentNode, visitedClasses, filter));
+			} else {
+				visitClass(parseTypeDescriptor(desc), currentNode, visitedClasses, filter);
+			}
 		}
 	}
 

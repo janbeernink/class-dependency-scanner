@@ -1,5 +1,6 @@
 package com.github.janbeernink.classdependencyscanner;
 
+import static com.github.janbeernink.classdependencyscanner.Matchers.hasDependencies;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.core.IsCollectionContaining.hasItem;
 import static org.hamcrest.core.IsCollectionContaining.hasItems;
@@ -7,6 +8,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import java.util.Set;
+
+import org.hamcrest.core.IsNot;
+import org.junit.Test;
 
 import com.github.janbeernink.classdependencyscanner.annotationdependency.AnnotatedClass;
 import com.github.janbeernink.classdependencyscanner.annotationdependency.MyAnnotation;
@@ -25,11 +29,11 @@ import com.github.janbeernink.classdependencyscanner.supertypedependency.FirstIn
 import com.github.janbeernink.classdependencyscanner.supertypedependency.InterfaceImplementerType;
 import com.github.janbeernink.classdependencyscanner.supertypedependency.SecondInterfaceType;
 import com.github.janbeernink.classdependencyscanner.supertypedependency.SuperClass;
+import com.github.janbeernink.classdependencyscanner.test.ClassUsingGenerics;
 import com.github.janbeernink.classdependencyscanner.test.DependsOnSelf;
+import com.github.janbeernink.classdependencyscanner.test.FieldType;
 import com.github.janbeernink.classdependencyscanner.throwsdependency.ClassWithThrowsMethod;
 import com.github.janbeernink.classdependencyscanner.throwsdependency.TestException;
-import org.hamcrest.core.IsNot;
-import org.junit.Test;
 
 public class ClassDependencyScannerTest {
 
@@ -93,5 +97,12 @@ public class ClassDependencyScannerTest {
 		DependencyGraphNode dependencyGraphNode = new ClassDependencyScanner().setFilter(Filters.isNotPartOfJDK()).buildDependencyGraph(DependsOnSelf.class);
 
 		assertThat(dependencyGraphNode.getDependencies(), IsNot.not(hasItems(new DependencyGraphNode(DependsOnSelf.class))));
+	}
+
+	@Test
+	public void testGenerics() {
+		DependencyGraphNode dependencyGraphNode = new ClassDependencyScanner().setFilter(Filters.isNotPartOfJDK()).buildDependencyGraph(ClassUsingGenerics.class);
+
+		assertThat(dependencyGraphNode, hasDependencies(ReturnType.class, FirstParameterType.class, FieldType.class, VariableType.class));
 	}
 }

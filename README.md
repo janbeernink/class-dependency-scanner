@@ -21,7 +21,6 @@ The iterator returned by the iterator() method on DependencyGraphNode is guarant
 Known issues
 ========================
 
-* Generic signatures are ignored.
 * Annotations are not yet fully processed.
 
 License

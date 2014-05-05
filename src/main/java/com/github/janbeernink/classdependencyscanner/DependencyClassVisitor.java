@@ -13,8 +13,10 @@ import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.signature.SignatureReader;
 
 import com.github.janbeernink.classdependencyscanner.function.Filter;
+
 final class DependencyClassVisitor extends ClassVisitor {
 
 	static final int API_VERSION = Opcodes.ASM5;
@@ -41,12 +43,15 @@ final class DependencyClassVisitor extends ClassVisitor {
 
 	@Override
 	public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
-		// TODO process method signature instead, if present
-
-		Set<Class<?>> classesFromMethodDescriptor = parseMethodDescriptor(desc);
-		for (Class<?> clazz : classesFromMethodDescriptor) {
-			visitClass(clazz, currentNode, visitedClasses, filter);
+		if (signature != null) {
+			new SignatureReader(signature).accept(new DependencySignatureVisitor(currentNode, visitedClasses, filter));
+		} else {
+			Set<Class<?>> classesFromMethodDescriptor = parseMethodDescriptor(desc);
+			for (Class<?> clazz : classesFromMethodDescriptor) {
+				visitClass(clazz, currentNode, visitedClasses, filter);
+			}
 		}
+
 		if (exceptions != null) {
 			for (String exception : exceptions) {
 				visitClass(getClassByInternalName(exception), currentNode, visitedClasses, filter);
@@ -58,8 +63,9 @@ final class DependencyClassVisitor extends ClassVisitor {
 
 	@Override
 	public FieldVisitor visitField(int access, String name, String desc, String signature, Object value) {
-		// TODO parse signature instead of desc, if present
-		if (desc != null) {
+		if (signature != null) {
+			new SignatureReader(signature).accept(new DependencySignatureVisitor(currentNode, visitedClasses, filter));
+		} else if (desc != null) {
 			visitClass(parseTypeDescriptor(desc), currentNode, visitedClasses, filter);
 		}
 
