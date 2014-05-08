@@ -1,6 +1,7 @@
 package com.github.janbeernink.classdependencyscanner;
 
 import static com.github.janbeernink.classdependencyscanner.DependencyGraphBuilder.ASM_VERSION;
+import static com.github.janbeernink.classdependencyscanner.Util.getClassByInternalName;
 
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
@@ -25,6 +26,11 @@ final class DependencyMethodVisitor extends MethodVisitor {
 				dependencyGraphBuilder.processTypeSignature(desc);
 			}
 		}
+	}
+
+	@Override
+	public void visitTypeInsn(int opcode, String type) {
+		dependencyGraphBuilder.registerDependency(getClassByInternalName(type));
 	}
 
 }

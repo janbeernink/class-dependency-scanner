@@ -1,6 +1,7 @@
 package com.github.janbeernink.classdependencyscanner;
 
 import static com.github.janbeernink.classdependencyscanner.Matchers.hasDependencies;
+import static com.github.janbeernink.classdependencyscanner.function.Filters.isNotPartOfJDK;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.core.IsCollectionContaining.hasItem;
 import static org.hamcrest.core.IsCollectionContaining.hasItems;
@@ -30,6 +31,9 @@ import com.github.janbeernink.classdependencyscanner.supertypedependency.SuperCl
 import com.github.janbeernink.classdependencyscanner.test.ClassUsingGenerics;
 import com.github.janbeernink.classdependencyscanner.test.DependsOnSelf;
 import com.github.janbeernink.classdependencyscanner.test.FieldType;
+import com.github.janbeernink.classdependencyscanner.test.Interface;
+import com.github.janbeernink.classdependencyscanner.test.InterfaceImplementation;
+import com.github.janbeernink.classdependencyscanner.test.InterfaceTypeFactory;
 import com.github.janbeernink.classdependencyscanner.throwsdependency.ClassWithThrowsMethod;
 import com.github.janbeernink.classdependencyscanner.throwsdependency.TestException;
 
@@ -100,5 +104,12 @@ public class ClassDependencyScannerTest {
 		DependencyGraphNode dependencyGraphNode = new ClassDependencyScanner().setFilter(Filters.isNotPartOfJDK()).buildDependencyGraph(ClassUsingGenerics.class);
 
 		assertThat(dependencyGraphNode, hasDependencies(ReturnType.class, FirstParameterType.class, FieldType.class, VariableType.class));
+	}
+
+	@Test
+	public void testConstructorCall() {
+		DependencyGraphNode dependencyGraphNode = new ClassDependencyScanner().setFilter(isNotPartOfJDK()).buildDependencyGraph(InterfaceTypeFactory.class);
+
+		assertThat(dependencyGraphNode, hasDependencies(Interface.class, InterfaceImplementation.class));
 	}
 }
