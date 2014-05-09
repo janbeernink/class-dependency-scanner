@@ -30,7 +30,11 @@ final class DependencyMethodVisitor extends MethodVisitor {
 
 	@Override
 	public void visitTypeInsn(int opcode, String type) {
-		dependencyGraphBuilder.registerDependency(getClassByInternalName(type));
+		if (type.startsWith("[")) {
+			dependencyGraphBuilder.processTypeSignature(type);
+		} else {
+			dependencyGraphBuilder.registerDependency(getClassByInternalName(type));
+		}
 	}
 
 }
