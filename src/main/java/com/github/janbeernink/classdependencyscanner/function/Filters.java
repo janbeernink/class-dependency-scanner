@@ -1,5 +1,11 @@
 package com.github.janbeernink.classdependencyscanner.function;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import com.github.janbeernink.classdependencyscanner.ClassPathEntry;
 import com.github.janbeernink.classdependencyscanner.Util;
 
@@ -58,6 +64,58 @@ public final class Filters {
 			}
 
 		};
+	}
+
+	/**
+	 * Returns a filter that only returns <code>true</code> if a class is in a given set of classes.
+	 *
+	 * @param classes
+	 *            the classes to include
+	 * @return a filter that only returns <code>true</code> for the given classes and false otherwise
+	 */
+	public static Filter isOneOf(Class<?>... classes) {
+		return isOneOf(Arrays.asList(classes));
+	}
+
+	/**
+	 * Returns a filter that only returns <code>true</code> if a class is in a given set of classes.
+	 *
+	 * @param classes
+	 *            the collection of classes to include
+	 * @return a filter that only returns <code>true</code> for any class in the given collection of classes and false otherwise
+	 */
+	public static Filter isOneOf(Collection<Class<?>> classes) {
+		final Set<Class<?>> includedClasses = Collections.unmodifiableSet(new HashSet<>(classes));
+
+		return new Filter() {
+
+			@Override
+			public boolean include(Class<?> clazz) {
+				return includedClasses.contains(clazz);
+			}
+		};
+	}
+
+	/**
+	 * Returns a filter that only returns <code>false</code> if a class is in a given set of classes.
+	 *
+	 * @param classes
+	 *            the classes to exclude
+	 * @return a filter that only returns <code>false</code> for the given classes and <code>true</code> otherwise
+	 */
+	public static Filter isNotOneOf(Class<?>... classes) {
+		return not(isOneOf(classes));
+	}
+
+	/**
+	 * Returns a filter that only returns <code>false</code> if a class is in a given collection of classes.
+	 *
+	 * @param classes
+	 *            the collection of classes to exclude
+	 * @return a filter that only returns <code>false</code> for any class in the given collection of classes and <code>true</code> otherwise
+	 */
+	public static Filter isNotOneOf(Collection<Class<?>> classes) {
+		return not(isOneOf(classes));
 	}
 
 	/**

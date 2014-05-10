@@ -27,13 +27,29 @@ public class FiltersTest {
 	};
 
 	@Test
-	public void testLimitToPackage() {
+	public void testIsInPackage() {
 		Filter filter = Filters.isInPackage("java.util");
 
 		assertTrue(filter.include(List.class));
 		assertFalse(filter.include(java.awt.List.class));
 		assertTrue(filter.include(Logger.class));
 		assertFalse(filter.include(String.class));
+	}
+
+	@Test
+	public void testIsOneOf() {
+		Filter filter = Filters.isOneOf(List.class);
+
+		assertTrue(filter.include(List.class));
+		assertFalse(filter.include(Object.class));
+	}
+
+	@Test
+	public void isNotOneOf() {
+		Filter filter = Filters.isNotOneOf(List.class);
+
+		assertFalse(filter.include(List.class));
+		assertTrue(filter.include(Object.class));
 	}
 
 	@Test
