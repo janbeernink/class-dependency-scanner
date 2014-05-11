@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
+import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
@@ -24,6 +25,7 @@ class DependencyGraphBuilder {
 
 	private final ClassVisitor classVisitor;
 	private final MethodVisitor methodVisitor;
+	private final AnnotationVisitor annotationVisitor;
 	private final SignatureVisitor signatureVisitor;
 
 	private final Filter filter;
@@ -40,9 +42,10 @@ class DependencyGraphBuilder {
 		this.typeQueue = new LinkedList<>();
 		this.dependencyGraphNodes = new HashMap<>();
 
-		this.classVisitor = new DependencyClassVisitor(this);
-		this.methodVisitor = new DependencyMethodVisitor(this);
-		this.signatureVisitor = new DependencySignatureVisitor(this);
+		this.classVisitor = new DependencyGraphClassVisitor(this);
+		this.methodVisitor = new DependencyGraphMethodVisitor(this);
+		this.signatureVisitor = new DependencyGraphSignatureVisitor(this);
+		this.annotationVisitor = new DependencyGraphAnnotationVisitor(this);
 	}
 
 	DependencyGraphNode buildDependencyGraph(Class<?> startingClass) {
@@ -58,6 +61,7 @@ class DependencyGraphBuilder {
 			while (!typeQueue.isEmpty()) {
 				Class<?> currentClass = typeQueue.remove();
 				currentNode = dependencyGraphNodes.get(currentClass);
+
 				try (InputStream in = getInputStreamForClass(currentClass)) {
 					ClassReader classReader = new ClassReader(in);
 
@@ -82,6 +86,10 @@ class DependencyGraphBuilder {
 
 	MethodVisitor getMethodVisitor() {
 		return methodVisitor;
+	}
+
+	AnnotationVisitor getAnnotationVisitor() {
+		return annotationVisitor;
 	}
 
 	void registerDependency(Class<?> type) {

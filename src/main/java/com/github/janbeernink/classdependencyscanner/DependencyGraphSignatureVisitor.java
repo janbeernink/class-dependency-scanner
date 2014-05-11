@@ -5,11 +5,11 @@ import static com.github.janbeernink.classdependencyscanner.Util.getClassByInter
 
 import org.objectweb.asm.signature.SignatureVisitor;
 
-class DependencySignatureVisitor extends SignatureVisitor {
+class DependencyGraphSignatureVisitor extends SignatureVisitor {
 
 	private final DependencyGraphBuilder dependencyGraphBuilder;
 
-	DependencySignatureVisitor(DependencyGraphBuilder dependencyGraphBuilder) {
+	DependencyGraphSignatureVisitor(DependencyGraphBuilder dependencyGraphBuilder) {
 		super(ASM_VERSION);
 
 		this.dependencyGraphBuilder = dependencyGraphBuilder;

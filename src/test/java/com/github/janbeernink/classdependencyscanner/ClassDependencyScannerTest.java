@@ -28,6 +28,10 @@ import com.github.janbeernink.classdependencyscanner.supertypedependency.FirstIn
 import com.github.janbeernink.classdependencyscanner.supertypedependency.InterfaceImplementerType;
 import com.github.janbeernink.classdependencyscanner.supertypedependency.SecondInterfaceType;
 import com.github.janbeernink.classdependencyscanner.supertypedependency.SuperClass;
+import com.github.janbeernink.classdependencyscanner.test.AlternativeClassAnnotationValueType;
+import com.github.janbeernink.classdependencyscanner.test.AnnotationTestCase;
+import com.github.janbeernink.classdependencyscanner.test.ClassAnnotation;
+import com.github.janbeernink.classdependencyscanner.test.ClassAnnotationWithValue;
 import com.github.janbeernink.classdependencyscanner.test.ClassUsingGenerics;
 import com.github.janbeernink.classdependencyscanner.test.DependsOnSelf;
 import com.github.janbeernink.classdependencyscanner.test.FieldType;
@@ -111,5 +115,12 @@ public class ClassDependencyScannerTest {
 		DependencyGraphNode dependencyGraphNode = new ClassDependencyScanner().setFilter(isNotPartOfJDK()).buildDependencyGraph(InterfaceTypeFactory.class);
 
 		assertThat(dependencyGraphNode, hasDependencies(Interface.class, InterfaceImplementation.class));
+	}
+
+	@Test
+	public void testAnnotations() {
+		ClassDependencyScanner scanner = new ClassDependencyScanner().setFilter(isNotPartOfJDK());
+
+		assertThat(scanner.buildDependencyGraph(AnnotationTestCase.class), hasDependencies(ClassAnnotation.class, ClassAnnotationWithValue.class, AlternativeClassAnnotationValueType.class));
 	}
 }

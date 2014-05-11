@@ -8,11 +8,11 @@ import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;
 
-final class DependencyClassVisitor extends ClassVisitor {
+final class DependencyGraphClassVisitor extends ClassVisitor {
 
 	private final DependencyGraphBuilder dependencyGraphBuilder;
 
-	DependencyClassVisitor(DependencyGraphBuilder dependencyGraphBuilder) {
+	DependencyGraphClassVisitor(DependencyGraphBuilder dependencyGraphBuilder) {
 		super(ASM_VERSION);
 
 		this.dependencyGraphBuilder = dependencyGraphBuilder;
@@ -22,7 +22,7 @@ final class DependencyClassVisitor extends ClassVisitor {
 	public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
 		dependencyGraphBuilder.processTypeSignature(desc);
 
-		return super.visitAnnotation(desc, visible);
+		return dependencyGraphBuilder.getAnnotationVisitor();
 	}
 
 	@Override
@@ -70,4 +70,5 @@ final class DependencyClassVisitor extends ClassVisitor {
 			dependencyGraphBuilder.registerDependency(getClassByInternalName(interfaceName));
 		}
 	}
+
 }

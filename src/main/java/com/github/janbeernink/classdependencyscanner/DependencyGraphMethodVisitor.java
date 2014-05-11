@@ -7,11 +7,11 @@ import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 
 
-final class DependencyMethodVisitor extends MethodVisitor {
+final class DependencyGraphMethodVisitor extends MethodVisitor {
 
 	private final DependencyGraphBuilder dependencyGraphBuilder;
 
-	DependencyMethodVisitor(DependencyGraphBuilder dependencyGraphBuilder) {
+	DependencyGraphMethodVisitor(DependencyGraphBuilder dependencyGraphBuilder) {
 		super(ASM_VERSION);
 
 		this.dependencyGraphBuilder = dependencyGraphBuilder;
