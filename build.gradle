@@ -9,7 +9,7 @@ sourceCompatibility = 1.7
 
 group = 'com.github.janbeernink'
 
-version = '1.0'
+version = '1.0-alpha-1'
 
 defaultTasks 'build'
 
@@ -47,7 +47,7 @@ jacoco {
 }
 
 wrapper {
-	gradleVersion = '1.12'
+	gradleVersion = '2.12'
 }
 
 task sourcesJar(type: Jar) {
