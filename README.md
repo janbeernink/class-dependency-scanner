@@ -1,5 +1,6 @@
 Class Dependency Scanner
 ========================
+![Build status](https://travis-ci.org/janbeernink/class-dependency-scanner.svg?branch=develop)
 
 This is a small experimental Java library to analyze the dependencies between classes and generate a dependency graph.
 
