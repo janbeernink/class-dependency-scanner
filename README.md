@@ -26,4 +26,4 @@ Known issues
 License
 ========================
 
-This project is licensed under the LGPL version 2.1, please see the LICENSE file for more details.
+This project is licensed under the Apache Software License, Version 2.0, please see the LICENSE file for more details.
