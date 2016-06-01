@@ -103,7 +103,7 @@ bintray {
 		licenses = ['Apache-2.0']
 		vcsUrl = 'https://github.com/janbeernink/class-dependency-scanner.git'
 		version {
-			name = version
+			name = project.version
 		}
 	}
 	publications = ['mavenLibrary']
