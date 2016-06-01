@@ -1,4 +1,4 @@
-Class Dependency Scanner
+Class Dependency Scanner [![Build Status](https://travis-ci.org/janbeernink/class-dependency-scanner.svg?branch=develop)](https://travis-ci.org/janbeernink/class-dependency-scanner)
 ========================
 
 This is a small experimental Java library to analyze the dependencies between classes and generate a dependency graph.
@@ -26,4 +26,4 @@ Known issues
 License
 ========================
 
-This project is licensed under the LGPL version 2.1, please see the LICENSE file for more details.
+This project is licensed under the Apache Software License, Version 2.0, please see the LICENSE file for more details.
