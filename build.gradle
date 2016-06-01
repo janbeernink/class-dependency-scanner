@@ -13,7 +13,7 @@ sourceCompatibility = 1.7
 
 group = 'com.github.janbeernink'
 
-version = '1.0-alpha-2-SNAPSHOT'
+version = '1.0-alpha-2'
 
 defaultTasks 'build'
 
@@ -103,7 +103,7 @@ bintray {
 		licenses = ['Apache-2.0']
 		vcsUrl = 'https://github.com/janbeernink/class-dependency-scanner.git'
 		version {
-			name = version
+			name = project.version
 		}
 	}
 	publications = ['mavenLibrary']
