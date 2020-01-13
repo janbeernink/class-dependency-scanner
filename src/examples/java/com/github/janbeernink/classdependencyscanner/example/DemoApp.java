@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.janbeernink.classdependencyscanner;
+package com.github.janbeernink.classdependencyscanner.example;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static com.github.janbeernink.classdependencyscanner.function.Blocks.addClassTo;
@@ -25,7 +25,9 @@ import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class ClassDependencyScannerApp {
+import com.github.janbeernink.classdependencyscanner.ClassDependencyScanner;
+
+public class DemoApp {
 
 	public static void main(String[] args) {
 		ClassDependencyScanner classDependencyScanner = new ClassDependencyScanner();
