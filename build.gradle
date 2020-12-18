@@ -21,15 +21,32 @@ repositories {
 	mavenCentral()
 }
 
+configurations {
+	asciidoclet
+}
+
 sourceSets {
 	demoApp
 	examples
+	asciidoclet
 }
 
 dependencies {
 	compile 'org.ow2.asm:asm:5.0.2'
 	testCompile 'junit:junit:4.11', 'org.hamcrest:hamcrest-library:1.3'
 	examplesCompile sourceSets.main.runtimeClasspath
+	asciidoclet 'org.asciidoctor:asciidoclet:1.5.4'
+}
+
+javadoc {
+	options.docletpath = configurations.asciidoclet.files.asType(List)
+	options.doclet = 'org.asciidoctor.Asciidoclet'
+//	options.overview = "src/main/java/overview.adoc"
+//	options.addStringOption "-base-dir", "${projectDir}" // (1)
+//	options.addStringOption "-attribute", // (2)
+//			"name=${project.name}," +
+//					"version=${project.version}," +
+//					"title-link=https://example.com[${project.name} ${project.version}]"
 }
 
 license {

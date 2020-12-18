@@ -28,8 +28,8 @@ public final class Blocks {
 	 * Returns a new {@link Block} that adds the class of the dependency graph node to the given collection.
 	 *
 	 * @param collection
-	 *            the collection to add the class to
-	 * @return a new block that adds the class to the collection
+	 *            the collection to add the class to.
+	 * @return a new block that adds the class to the collection.
 	 */
 	public static Block addClassTo(final Collection<? super Class<?>> collection) {
 		return new Block() {
@@ -46,8 +46,8 @@ public final class Blocks {
 	 * Returns a new {@link Block} that adds a dependency graph node to the given collection.
 	 *
 	 * @param collection
-	 *            the collection to add the node to
-	 * @return a new block that adds the node to the collection
+	 *            the collection to add the node to.
+	 * @return a new block that adds the node to the collection.
 	 */
 	public static Block addNodeTo(final Collection<? super DependencyGraphNode> collection) {
 		return new Block() {
