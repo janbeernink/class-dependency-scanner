@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Jan Beernink
+ * Copyright 2016-2020 Jan Beernink
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,10 +57,7 @@ public class ClassPathEntry {
 			return false;
 		}
 		ClassPathEntry other = (ClassPathEntry) obj;
-		if (type != other.type || !path.equals(other.path)) {
-			return false;
-		}
-		return true;
+		return type == other.type && path.equals(other.path);
 	}
 
 }
