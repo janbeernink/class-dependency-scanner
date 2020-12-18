@@ -82,22 +82,22 @@ public final class Filters {
 	}
 
 	/**
-	 * Returns a filter that only returns <code>true</code> if a class is in a given set of classes.
+	 * Returns a filter that only returns `true` if a class is in a given set of classes.
 	 *
 	 * @param classes
 	 *            the classes to include
-	 * @return a filter that only returns <code>true</code> for the given classes and false otherwise
+	 * @return a filter that only returns `true` for the given classes and false otherwise
 	 */
 	public static Filter isOneOf(Class<?>... classes) {
 		return isOneOf(Arrays.asList(classes));
 	}
 
 	/**
-	 * Returns a filter that only returns <code>true</code> if a class is in a given set of classes.
+	 * Returns a filter that only returns `true` if a class is in a given set of classes.
 	 *
 	 * @param classes
 	 *            the collection of classes to include
-	 * @return a filter that only returns <code>true</code> for any class in the given collection of classes and false otherwise
+	 * @return a filter that only returns `true` for any class in the given collection of classes and false otherwise
 	 */
 	public static Filter isOneOf(Collection<Class<?>> classes) {
 		final Set<Class<?>> includedClasses = Collections.unmodifiableSet(new HashSet<>(classes));
@@ -112,22 +112,22 @@ public final class Filters {
 	}
 
 	/**
-	 * Returns a filter that only returns <code>false</code> if a class is in a given set of classes.
+	 * Returns a filter that only returns `false` if a class is in a given set of classes.
 	 *
 	 * @param classes
 	 *            the classes to exclude
-	 * @return a filter that only returns <code>false</code> for the given classes and <code>true</code> otherwise
+	 * @return a filter that only returns `false` for the given classes and `true` otherwise
 	 */
 	public static Filter isNotOneOf(Class<?>... classes) {
 		return not(isOneOf(classes));
 	}
 
 	/**
-	 * Returns a filter that only returns <code>false</code> if a class is in a given collection of classes.
+	 * Returns a filter that only returns `false` if a class is in a given collection of classes.
 	 *
 	 * @param classes
 	 *            the collection of classes to exclude
-	 * @return a filter that only returns <code>false</code> for any class in the given collection of classes and <code>true</code> otherwise
+	 * @return a filter that only returns `false` for any class in the given collection of classes and `true` otherwise
 	 */
 	public static Filter isNotOneOf(Collection<Class<?>> classes) {
 		return not(isOneOf(classes));
