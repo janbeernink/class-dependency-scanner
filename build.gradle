@@ -22,6 +22,7 @@ repositories {
 }
 
 sourceSets {
+	demoApp
 	examples
 }
 
