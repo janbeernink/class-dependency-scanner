@@ -9,14 +9,16 @@ This is a small experimental Java library to analyze the dependencies between cl
 The following example shows how to generate a dependency graph for class String:
 [source,java,indent=0]
 ----
-include::src/examples/java/com/github/janbeernink/classdependencyscanner/example/StringGraph.java[tag=graphCreation]
+DependencyGraphNode startingNode = new ClassDependencyScanner().buildDependencyGraph(String.class);
 ----
 
 This will return a DependencyGraphNode that represents the String class. This node can be used as a starting point to iterate over the entire graph:
 
 [source,java,indent=0]
 ----
-include::src/examples/java/com/github/janbeernink/classdependencyscanner/example/StringGraph.java[tag=iterate]
+for (DependencyGraphNode node: startingNode) {
+        // Do something useful
+}
 ----
 
 The iterator returned by the iterator() method on DependencyGraphNode is guaranteed to visit each node exactly once, even when there are cycles in the graph.
